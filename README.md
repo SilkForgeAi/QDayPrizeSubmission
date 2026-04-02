@@ -120,15 +120,19 @@ python3 shor_9bit_ripple.py --mode hw --bits 12 --shots 20000
 | File | Description |
 |------|-------------|
 | `shor_9bit_ripple.py` | Main circuit: carry-ripple oracle, hardware runner, EC verifier |
-| `QDay_Prize_Submission/ecc_keys.json` | Competition key parameters (4-bit through 21-bit) |
-| `QDay_Prize_Submission/verify_keys.py` | Standalone EC verification script |
-| `9bit_ripple_ibm_torino_20260331_162859.json` | 9-bit hardware result artifact (run 1, 51 hits) |
-| `9bit_ripple_ibm_torino_20260331_162503.json` | 9-bit hardware result artifact (run 2, 75 hits) |
-| `10bit_ripple_ibm_torino_20260331_163318.json` | 10-bit hardware result artifact (38 hits) |
-| `11bit_ripple_ibm_fez_20260401_202757.json` | 11-bit hardware result artifact (16 hits) |
-| `12bit_ripple_ibm_fez_20260401_204308.json` | 12-bit hardware result artifact (12 hits) |
-
-Prior scaling runs (4-bit, 6-bit, 7-bit) used a lookup table oracle and are in `QDay_Prize_Submission/`.
+| `shor_ecdlp_final.py` | Core ECDLP/Shor implementation module |
+| `ecc_keys.json` | Competition key parameters (4-bit through 21-bit) |
+| `elliptic_curve.py` | Elliptic-curve arithmetic utilities |
+| `verify_keys.py` | Standalone EC verification script |
+| `results/4bit.json` | 4-bit hardware result artifact |
+| `results/6bit.json` | 6-bit hardware result artifact |
+| `results/7bit.json` | 7-bit hardware result artifact |
+| `results/8bit.json` | 8-bit hardware result artifact |
+| `results/9bit_run1.json` | 9-bit hardware result artifact (run 1) |
+| `results/9bit_run2.json` | 9-bit hardware result artifact (run 2) |
+| `results/10bit.json` | 10-bit hardware result artifact |
+| `results/11bit.json` | 11-bit hardware result artifact |
+| `results/12bit.json` | 12-bit hardware result artifact |
 
 ---
 
@@ -136,7 +140,7 @@ Prior scaling runs (4-bit, 6-bit, 7-bit) used a lookup table oracle and are in `
 
 1. Open any Job ID in the IBM Quantum console: https://quantum.ibm.com/
 2. Re-run the scripts with the keys in `ecc_keys.json`
-3. Run `python3 QDay_Prize_Submission/verify_keys.py` to check all EC verifications locally
+3. Run `python3 verify_keys.py` to check all EC verifications locally
 
 ---
 
