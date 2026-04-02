@@ -1,0 +1,21 @@
+{
+  "timestamp": "20251220_202339",
+  "bit_length": 8,
+  "expected_d": 103,
+  "n": 139,
+  "shots": 50000,
+  "success_count": 1,
+  "success_rate": 0.002,
+  "valid_measurements": 95,
+  "unique_pairs": 1,
+  "top_pairs": [
+    [
+      203,
+      79,
+      1
+    ]
+  ],
+  "circuit_depth": 268,
+  "circuit_gates": 427,
+  "simulation_time": 2.4381051063537598
+}

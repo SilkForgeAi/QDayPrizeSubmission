@@ -1,0 +1,24 @@
+{
+  "timestamp": "20251222_210056",
+  "bit_length": 8,
+  "expected_d": 103,
+  "n": 139,
+  "shots": 50000,
+  "optimization_level": 3,
+  "max_oracle_val": 16,
+  "success_count": 1,
+  "success_rate": 0.002,
+  "valid_measurements": 379,
+  "unique_pairs": 1,
+  "top_pairs": [
+    [
+      64,
+      218,
+      1
+    ]
+  ],
+  "circuit_depth": 1091,
+  "circuit_gates": 1428,
+  "simulation_time": 5.857856750488281,
+  "transpilation_time": 0.8172659873962402
+}

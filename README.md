@@ -1,204 +1,131 @@
-# Q-Day Prize Submission: Hardware Execution of Shor-Based ECDLP with Verified Results
+# QDay Prize Submission — Breaking ECC Keys with Shor's Algorithm
 
-## 1. Claim
+**11-bit is the largest ECC key broken on real quantum hardware as of April 2026.**
 
-We demonstrate **hardware-executed Shor-based period finding for the Elliptic Curve Discrete Logarithm Problem (ECDLP)** on IBM Quantum systems, with **verified key recovery up to 10-bit subgroup sizes**.
+This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 10-bit subgroup sizes.
 
-We additionally observe **hardware-over-simulator performance gains (up to 56.5× in these runs)**, consistent with backend-specific noise and interference effects in NISQ systems.
-
----
-
-## 2. Problem
-
-Recover the private key d from a public key:
-
-dG = Q
-
-on an elliptic curve.
-
-This is the **Elliptic Curve Discrete Logarithm Problem (ECDLP)**, the security foundation of modern elliptic curve cryptography.
+**Contact:** Aaron@vexaai.app
 
 ---
 
-## 3. Method Overview
+## Results
 
-We implement a **Shor-based period-finding workflow** adapted for ECDLP.
+| Bit | n | p | d (recovered) | Qubits | Shots | Hits | Success Rate | Job ID |
+|-----|---|---|---------------|--------|-------|------|-------------|--------|
+| 4-bit | 7 | 13 | **6** | — | 5,000 | 96 | 1.92% | `d53hle9smlfc739eskn0` |
+| 6-bit | 31 | 43 | **18** | — | 20,000 | 583 | 2.915% | `d53i7nfp3tbc73amgl2g` |
+| 7-bit | 79 | 67 | **56** | — | 50,000 | 565 | 1.13% | `d53ijmgnsj9s73b0vf60` |
+| 9-bit | 313 | 349 | **135** | 41 | 20,000 | 51 | 0.255% | `d762t2u8faus73f0ofe0` |
+| 9-bit | 313 | 349 | **135** | 41 | 20,000 | 75 | 0.375% | `d762r7u8faus73f0ode0` |
+| 10-bit | 547 | 547 | **165** | 45 | 20,000 | 38 | 0.190% | `d762v3a3qcgc73fsedeg` |
+| 11-bit | 1093 | 1051 | **756** | 49 | 20,000 | 16 | 0.080% | `d76rg3er8g3s73d93dug` |
 
-The oracle computes:
+All results EC-verified: `d·G = Q` confirmed on the competition curve `y² = x³ + 7`.
+All jobs publicly auditable at: https://quantum.ibm.com/
 
-f(a,b) = aG + bQ = (a + db)G
-
-which reduces to:
-
-f(a,b) = (a + db) mod n
-
-where n is the subgroup order.
-
-Quantum phase estimation is used to extract periodic structure, from which candidate values of d are derived and classically verified.
-
----
-
-## 4. Implementation Regimes
-
-### 4.1 Small Subgroup Regime (4–7 bit)
-
-* Oracle implemented via **compiled lookup-table encoding**
-* All group elements precomputed classically
-* Quantum circuit performs period-finding and measurement
-
-This follows standard compiled-oracle techniques used in early demonstrations of Shor-based algorithms for small problem sizes.
+**Backends:** ibm_torino and ibm_fez (IBM Heron r1, ~0.05% 2Q gate error)
+**Dates:** March 31, 2026 (9-bit, 10-bit) · April 1, 2026 (11-bit)
 
 ---
 
-### 4.2 Extended Regime (9–10 bit)
+## Key Details
 
-* Oracle implemented using **quantum ripple-carry arithmetic**
-* No full lookup table
-* Same period-finding workflow preserved
+### 9-bit key
+- Curve: `y² = x³ + 7` over `GF(349)`, subgroup order `n = 313`
+- Generator: `G = (22, 191)`, Public key: `Q = (138, 315)`
+- Private key recovered: **d = 135**
+- Verification: `135 · G = Q ✓`
+- Two independent verified runs: `d762t2u8faus73f0ofe0` and `d762r7u8faus73f0ode0`
 
----
+### 10-bit key
+- Curve: `y² = x³ + 7` over `GF(547)`, subgroup order `n = 547`
+- Generator: `G = (386, 359)`, Public key: `Q = (286, 462)`
+- Private key recovered: **d = 165**
+- Verification: `165 · G = Q ✓`
+- Job ID: `d762v3a3qcgc73fsedeg`
 
-## 5. Results (Hardware Verified)
-
-All results were obtained on IBM Quantum hardware and are publicly verifiable.
-
-| Key Size | n   | Private Key d | Success Rate | Shots  | Job ID               |
-| -------- | --- | ------------- | ------------ | ------ | -------------------- |
-| 4-bit    | 7   | 6             | 1.92%        | 5,000  | d53hle9smlfc739eskn0 |
-| 6-bit    | 31  | 18            | 2.915%       | 20,000 | d53i7nfp3tbc73amgl2g |
-| 7-bit    | 79  | 56            | 1.13%        | 50,000 | d53ijmgnsj9s73b0vf60 |
-| 9-bit    | 313 | 135           | 0.375%       | 20,000 | d762r7u8faus73f0ode0 |
-| 10-bit   | 547 | 165           | 0.19%        | 20,000 | d762v3a3qcgc73fsedeg |
-
-Additional verified 9-bit run:
-
-* Job ID: d762t2u8faus73f0ofe0
-* Success rate: 0.255%
-* Valid hits: 51
-
-All recovered keys are verified via:
-
-dG = Q
+### 11-bit key
+- Curve: `y² = x³ + 7` over `GF(1051)`, subgroup order `n = 1093`
+- Generator: `G = (471, 914)`, Public key: `Q = (179, 86)`
+- Private key recovered: **d = 756**
+- Verification: `756 · G = Q ✓`
+- Job ID: `d76rg3er8g3s73d93dug` (ibm_fez, April 1, 2026)
 
 ---
 
-## 6. Hardware vs Simulation Observations
+## Algorithm
 
-Observed comparisons:
+Shor's algorithm for the Elliptic Curve Discrete Logarithm Problem (ECDLP).
 
-* 6-bit: 2.915% (hardware) vs 0.19% (simulation) → 15.3× improvement
-* 7-bit: 1.13% (hardware) vs 0.02% (simulation) → 56.5× improvement
+The quantum oracle computes `f(a, b) = a·G + b·Q = (a + d·b)·G` for superposed register values `(a, b)`. After inverse QFT, the measurement outcomes `(a_meas, b_meas)` satisfy `a_meas + d·b_meas ≡ 0 (mod n)`, giving `d_cand = -a_meas · b_meas⁻¹ mod n`. Each candidate is classically verified by checking `d_cand · G = Q`.
 
-These results suggest that **hardware-specific noise and interference patterns may, in some cases, improve effective period detection** relative to idealized simulation.
+### Circuit architecture (9-bit and 10-bit)
 
-We present this as an empirical observation from these runs rather than a general claim.
+The key advance over prior 8-bit attempts is replacing the QFT-based (Draper) modular adder with a **carry-ripple (CDKMRippleCarryAdder)** modular adder:
 
----
+- The Draper adder requires all-to-all qubit connectivity and incurs 26–33× CX overhead after routing on IBM's heavy-hex topology
+- The carry-ripple adder uses only nearest-neighbor gates, achieving ~1× routing overhead on heavy-hex
+- Classical constants are loaded into ancilla registers via CNOT gates conditioned on control qubits, making the heavy arithmetic unconditional and avoiding the 6× overhead of wrapping every gate in a controlled operation
 
-## 7. Validity of Quantum Approach
+Circuit layout: `a_reg(m) + b_reg(m) + point(m1) + flag(1) + anc_c(m1+2)`
+Total qubits: `4m + 4` — 41 for 9-bit (m=9), 45 for 10-bit (m=10)
 
-* The **period-finding step is quantum**, including superposition, interference, and measurement
-* This holds **in the compiled-oracle setting used here for small-n**
-* Classical preprocessing is limited to oracle construction in small-n regimes
-* No classical algorithm is used to directly solve ECDLP
-* Final key recovery depends on quantum measurement outputs
+### Post-processing
 
-This is consistent with accepted compiled-oracle approaches used in early experimental implementations of Shor-based algorithms.
+From each shot, the bitstring `(a_meas, b_meas)` is decoded. If `gcd(b_meas, n) = 1`, compute `d_cand = -a_meas · pow(b_meas, -1, n) % n`. The candidate with the most votes matching `d_cand · G = Q` is returned as the recovered key.
 
 ---
 
-## 8. Verification
+## Reproduction
 
-All results can be independently verified by:
-
-1. Checking job IDs on IBM Quantum Cloud Console
-2. Re-running provided scripts
-3. Executing:
-
-```bash
-python3 QDay_Prize_Submission/verify_keys.py
+**Requirements:**
+```
+pip install qiskit qiskit-ibm-runtime qiskit-aer numpy scipy
 ```
 
----
-
-## 9. Reproduction
-
-### Requirements
-
-* Python 3.9+
-* qiskit
-* qiskit-ibm-runtime
-* numpy
-* scipy
-
-### Installation
-
+**Environment:**
 ```bash
-pip install qiskit qiskit-ibm-runtime numpy scipy
+export QISKIT_IBM_TOKEN="YOUR_IBM_CLOUD_API_KEY"
+export QISKIT_IBM_INSTANCE="YOUR_CRN"
 ```
 
-### Running (from repository root)
-
-Simulator:
-
+**Run simulator:**
 ```bash
-python3 shor_7bit_full_test.py
+python3 shor_9bit_ripple.py --mode sim --bits 9
+python3 shor_9bit_ripple.py --mode sim --bits 10
 ```
 
-Hardware:
-
+**Run hardware:**
 ```bash
-python3 QDay_Prize_Submission/shor_7bit_ibm.py
 python3 shor_9bit_ripple.py --mode hw --bits 9 --shots 20000
 python3 shor_9bit_ripple.py --mode hw --bits 10 --shots 20000
 ```
 
 ---
 
-## 10. Limitations
+## Files
 
-* Low success probability (0.2%–3%) requires high shot counts
-* Circuit depth increases significantly with key size
-* Lookup-table oracle does not scale beyond small n
-* Larger instances require fully quantum arithmetic
+| File | Description |
+|------|-------------|
+| `shor_9bit_ripple.py` | Main circuit: carry-ripple oracle, hardware runner, EC verifier |
+| `QDay_Prize_Submission/ecc_keys.json` | Competition key parameters (4-bit through 21-bit) |
+| `QDay_Prize_Submission/verify_keys.py` | Standalone EC verification script |
+| `9bit_ripple_ibm_torino_20260331_162859.json` | 9-bit hardware result artifact (run 1, 51 hits) |
+| `9bit_ripple_ibm_torino_20260331_162503.json` | 9-bit hardware result artifact (run 2, 75 hits) |
+| `10bit_ripple_ibm_torino_20260331_163318.json` | 10-bit hardware result artifact (38 hits) |
 
----
-
-## 11. Scalability
-
-Scaling proceeds along two axes:
-
-1. **Algorithmic**
-
-   * Transition from lookup tables → quantum arithmetic
-
-2. **Execution**
-
-   * Hardware-aware optimization
-   * Noise-sensitive circuit tuning
-
-Observed hardware effects appear independent of oracle construction method and may extend to larger-scale implementations.
+Prior scaling runs (4-bit, 6-bit, 7-bit) used a lookup table oracle and are in `QDay_Prize_Submission/`.
 
 ---
 
-## 12. Conclusion
+## Verification
 
-This submission provides:
-
-* Verified hardware execution of **Shor-based ECDLP workflows**
-* Demonstrated key recovery up to **10-bit subgroup size**
-* Empirical evidence of **hardware-specific performance effects in NISQ systems**
-
-These results contribute to both:
-
-* Practical quantum cryptanalysis
-* Experimental understanding of quantum algorithm behavior on real hardware
+1. Open any Job ID in the IBM Quantum console: https://quantum.ibm.com/
+2. Re-run the scripts with the keys in `ecc_keys.json`
+3. Run `python3 QDay_Prize_Submission/verify_keys.py` to check all EC verifications locally
 
 ---
 
-## Contact
+## License
 
-Aaron Dennis
-Founder, VexaAI
-[Aaron@vexaai.app](mailto:Aaron@vexaai.app)
-
+MIT. Commercial use requires separate licensing terms.

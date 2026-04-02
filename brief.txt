@@ -1,0 +1,58 @@
+QDay Prize Submission Brief
+===========================
+
+10-bit is the largest ECC key broken on real quantum hardware as of April 2026.
+
+Project
+-------
+Hardware-verified ECDLP key recovery using Shor's algorithm on IBM Quantum.
+
+Contact
+-------
+Aaron@vexaai.app
+
+What is demonstrated
+--------------------
+1) Real IBM hardware runs with verifiable job IDs
+2) Correct private key recovery and classical verification d*G = Q
+3) Scaling evidence beyond baseline small-key runs
+
+Verified keys
+-------------
+4-bit:  n=7,   d=6    | 1.92%   | job d53hle9smlfc739eskn0
+6-bit:  n=31,  d=18   | 2.915%  | job d53i7nfp3tbc73amgl2g
+7-bit:  n=79,  d=56   | 1.13%   | job d53ijmgnsj9s73b0vf60
+9-bit:  n=313, d=135  | 0.375%  | job d762r7u8faus73f0ode0
+10-bit: n=547, d=165  | 0.19%   | job d762v3a3qcgc73fsedeg
+
+Additional 9-bit verified run
+-----------------------------
+9-bit: n=313, d=135 | 0.255% | job d762t2u8faus73f0ofe0
+
+Largest key broken
+------------------
+10-bit (n=547)
+
+Methods summary
+---------------
+- Uses Shor's algorithm for ECDLP.
+- Oracle computes f(a,b) = aP + b·d·P mod n.
+- IQFT extracts d via d_cand = -a·b⁻¹ mod n.
+- EC verification confirms d·G = Q.
+
+Backend
+-------
+IBM Torino via qiskit-ibm-runtime
+
+Limitations
+-----------
+- Low hit rates at larger bit sizes
+- High shot counts required
+- Scaling cost rises with circuit depth
+
+Repository deliverables
+-----------------------
+- README.md
+- this brief (brief.txt + brief.pdf)
+- source code and key material
+- per-run JSON artifacts for verification

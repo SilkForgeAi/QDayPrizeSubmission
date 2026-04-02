@@ -1,0 +1,114 @@
+{
+  "timestamp": "20260122_162713",
+  "job_id": "d5p98hgh0i0s73eoutvg",
+  "bit_length": 8,
+  "n": 139,
+  "expected_d": 103,
+  "backend": "<IBMBackend('ibm_torino')>",
+  "shots": 5000,
+  "success_count": 0,
+  "success_rate": 0.0,
+  "top_20_measurements": [
+    {
+      "bitstring": "1010000011010001",
+      "count": 4,
+      "percentage": 0.08
+    },
+    {
+      "bitstring": "1010100011011000",
+      "count": 4,
+      "percentage": 0.08
+    },
+    {
+      "bitstring": "0001100001010000",
+      "count": 4,
+      "percentage": 0.08
+    },
+    {
+      "bitstring": "1110100001010010",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1100010011010111",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0001100000100101",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1111001000010010",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0110000001010111",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1001110011100000",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1011000011010000",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1011110101001110",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0101110011001000",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0101100001111111",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1101001001110110",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0110000001001011",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0101000010010011",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0101100001010110",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1010100011011100",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "0010110011010100",
+      "count": 3,
+      "percentage": 0.06
+    },
+    {
+      "bitstring": "1010110001011100",
+      "count": 3,
+      "percentage": 0.06
+    }
+  ],
+  "d_found": {}
+}
