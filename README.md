@@ -1,8 +1,8 @@
 # QDay Prize Submission — Breaking ECC Keys with Shor's Algorithm
 
-**11-bit is the largest ECC key broken on real quantum hardware as of April 2026.**
+**12-bit is the largest ECC key broken on real quantum hardware as of April 2026.**
 
-This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 10-bit subgroup sizes.
+This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 12-bit subgroup sizes.
 
 **Contact:** Aaron@vexaai.app
 
@@ -19,12 +19,13 @@ This repository contains verified IBM Quantum hardware results for ECDLP key rec
 | 9-bit | 313 | 349 | **135** | 41 | 20,000 | 75 | 0.375% | `d762r7u8faus73f0ode0` |
 | 10-bit | 547 | 547 | **165** | 45 | 20,000 | 38 | 0.190% | `d762v3a3qcgc73fsedeg` |
 | 11-bit | 1093 | 1051 | **756** | 49 | 20,000 | 16 | 0.080% | `d76rg3er8g3s73d93dug` |
+| 12-bit | 2143 | 2089 | **1384** | 53 | 20,000 | 12 | 0.060% | `d76rn746ji0c738c2nsg` |
 
 All results EC-verified: `d·G = Q` confirmed on the competition curve `y² = x³ + 7`.
 All jobs publicly auditable at: https://quantum.ibm.com/
 
 **Backends:** ibm_torino and ibm_fez (IBM Heron r1, ~0.05% 2Q gate error)
-**Dates:** March 31, 2026 (9-bit, 10-bit) · April 1, 2026 (11-bit)
+**Dates:** March 31, 2026 (9-bit, 10-bit) · April 1, 2026 (11-bit, 12-bit)
 
 ---
 
@@ -50,6 +51,13 @@ All jobs publicly auditable at: https://quantum.ibm.com/
 - Private key recovered: **d = 756**
 - Verification: `756 · G = Q ✓`
 - Job ID: `d76rg3er8g3s73d93dug` (ibm_fez, April 1, 2026)
+
+### 12-bit key
+- Curve: `y² = x³ + 7` over `GF(2089)`, subgroup order `n = 2143`
+- Generator: `G = (1417, 50)`, Public key: `Q = (1043, 1795)`
+- Private key recovered: **d = 1384**
+- Verification: `1384 · G = Q ✓`
+- Job ID: `d76rn746ji0c738c2nsg` (ibm_fez, April 1, 2026)
 
 ---
 
@@ -93,12 +101,16 @@ export QISKIT_IBM_INSTANCE="YOUR_CRN"
 ```bash
 python3 shor_9bit_ripple.py --mode sim --bits 9
 python3 shor_9bit_ripple.py --mode sim --bits 10
+python3 shor_9bit_ripple.py --mode sim --bits 11
+python3 shor_9bit_ripple.py --mode sim --bits 12
 ```
 
 **Run hardware:**
 ```bash
 python3 shor_9bit_ripple.py --mode hw --bits 9 --shots 20000
 python3 shor_9bit_ripple.py --mode hw --bits 10 --shots 20000
+python3 shor_9bit_ripple.py --mode hw --bits 11 --shots 20000
+python3 shor_9bit_ripple.py --mode hw --bits 12 --shots 20000
 ```
 
 ---
@@ -113,6 +125,8 @@ python3 shor_9bit_ripple.py --mode hw --bits 10 --shots 20000
 | `9bit_ripple_ibm_torino_20260331_162859.json` | 9-bit hardware result artifact (run 1, 51 hits) |
 | `9bit_ripple_ibm_torino_20260331_162503.json` | 9-bit hardware result artifact (run 2, 75 hits) |
 | `10bit_ripple_ibm_torino_20260331_163318.json` | 10-bit hardware result artifact (38 hits) |
+| `11bit_ripple_ibm_fez_20260401_202757.json` | 11-bit hardware result artifact (16 hits) |
+| `12bit_ripple_ibm_fez_20260401_204308.json` | 12-bit hardware result artifact (12 hits) |
 
 Prior scaling runs (4-bit, 6-bit, 7-bit) used a lookup table oracle and are in `QDay_Prize_Submission/`.
 
