@@ -35,7 +35,7 @@ from qiskit_aer import AerSimulator
 warnings.filterwarnings('ignore')
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-KEYS_FILE  = os.path.join(SCRIPT_DIR, 'QDay_Prize_Submission', 'ecc_keys.json')
+KEYS_FILE  = os.path.join(SCRIPT_DIR, 'ecc_keys.json')
 
 
 # ╔══════════════════════════════════════════════════════════════════════════╗

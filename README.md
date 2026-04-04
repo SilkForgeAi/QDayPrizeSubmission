@@ -1,8 +1,8 @@
 # QDay Prize Submission — Breaking ECC Keys with Shor's Algorithm
 
-**12-bit is the largest ECC key broken on real quantum hardware as of April 2026.**
+**15-bit is the largest ECC key broken on real quantum hardware as of April 2026.**
 
-This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 12-bit subgroup sizes.
+This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 15-bit subgroup sizes.
 
 **Contact:** Aaron@vexaai.app
 
@@ -20,12 +20,15 @@ This repository contains verified IBM Quantum hardware results for ECDLP key rec
 | 10-bit | 547 | 547 | **165** | 45 | 20,000 | 38 | 0.190% | `d762v3a3qcgc73fsedeg` |
 | 11-bit | 1093 | 1051 | **756** | 49 | 20,000 | 16 | 0.080% | `d76rg3er8g3s73d93dug` |
 | 12-bit | 2143 | 2089 | **1384** | 53 | 20,000 | 12 | 0.060% | `d76rn746ji0c738c2nsg` |
+| 13-bit | 4243 | 4159 | **820** | 57 | 20,000 | 4 | 0.020% | `d78mhcqk86tc739vf5ng` |
+| 14-bit | 8293 | 8209 | **137** | 61 | 20,000 | 1 | 0.005% | `d78mjlak86tc739vf86g` |
+| 15-bit | 16693 | 16477 | **14794** | 65 | 20,000 | 2 | 0.010% | `d78mmv2k86tc739vfbcg` |
 
 All results EC-verified: `d·G = Q` confirmed on the competition curve `y² = x³ + 7`.
 All jobs publicly auditable at: https://quantum.ibm.com/
 
 **Backends:** ibm_torino and ibm_fez (IBM Heron r1, ~0.05% 2Q gate error)
-**Dates:** March 31, 2026 (9-bit, 10-bit) · April 1, 2026 (11-bit, 12-bit)
+**Dates:** March 31, 2026 (9-bit, 10-bit) · April 1, 2026 (11-bit, 12-bit) · April 4, 2026 (13-bit, 14-bit, 15-bit)
 
 ---
 
@@ -58,6 +61,27 @@ All jobs publicly auditable at: https://quantum.ibm.com/
 - Private key recovered: **d = 1384**
 - Verification: `1384 · G = Q ✓`
 - Job ID: `d76rn746ji0c738c2nsg` (ibm_fez, April 1, 2026)
+
+### 13-bit key
+- Curve: `y² = x³ + 7` over `GF(4159)`, subgroup order `n = 4243`
+- Generator: `G = (3390, 2980)`, Public key: `Q = (3457, 3962)`
+- Private key recovered: **d = 820**
+- Verification: `820 · G = Q ✓`
+- Job ID: `d78mhcqk86tc739vf5ng` (ibm_fez, April 4, 2026)
+
+### 14-bit key
+- Curve: `y² = x³ + 7` over `GF(8209)`, subgroup order `n = 8293`
+- Generator: `G = (5566, 7)`, Public key: `Q = (2144, 2381)`
+- Private key recovered: **d = 137**
+- Verification: `137 · G = Q ✓`
+- Job ID: `d78mjlak86tc739vf86g` (ibm_fez, April 4, 2026)
+
+### 15-bit key
+- Curve: `y² = x³ + 7` over `GF(16477)`, subgroup order `n = 16693`
+- Generator: `G = (15429, 10667)`, Public key: `Q = (6884, 12671)`
+- Private key recovered: **d = 14794**
+- Verification: `14794 · G = Q ✓`
+- Job ID: `d78mmv2k86tc739vfbcg` (ibm_fez, April 4, 2026)
 
 ---
 
@@ -103,6 +127,9 @@ python3 shor_9bit_ripple.py --mode sim --bits 9
 python3 shor_9bit_ripple.py --mode sim --bits 10
 python3 shor_9bit_ripple.py --mode sim --bits 11
 python3 shor_9bit_ripple.py --mode sim --bits 12
+python3 shor_9bit_ripple.py --mode sim --bits 13
+python3 shor_9bit_ripple.py --mode sim --bits 14
+python3 shor_9bit_ripple.py --mode sim --bits 15
 ```
 
 **Run hardware:**
@@ -111,6 +138,9 @@ python3 shor_9bit_ripple.py --mode hw --bits 9 --shots 20000
 python3 shor_9bit_ripple.py --mode hw --bits 10 --shots 20000
 python3 shor_9bit_ripple.py --mode hw --bits 11 --shots 20000
 python3 shor_9bit_ripple.py --mode hw --bits 12 --shots 20000
+python3 shor_9bit_ripple.py --mode hw --bits 13 --shots 20000
+python3 shor_9bit_ripple.py --mode hw --bits 14 --shots 20000
+python3 shor_9bit_ripple.py --mode hw --bits 15 --shots 20000
 ```
 
 ---
@@ -133,6 +163,9 @@ python3 shor_9bit_ripple.py --mode hw --bits 12 --shots 20000
 | `results/10bit.json` | 10-bit hardware result artifact |
 | `results/11bit.json` | 11-bit hardware result artifact |
 | `results/12bit.json` | 12-bit hardware result artifact |
+| `results/13bit.json` | 13-bit hardware result artifact |
+| `results/14bit.json` | 14-bit hardware result artifact |
+| `results/15bit.json` | 15-bit hardware result artifact |
 
 ---
 
