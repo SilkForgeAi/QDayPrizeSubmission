@@ -1,0 +1,2 @@
+# Proprietary: do not commit 17-bit hardware result artifacts
+results/17bit.json
