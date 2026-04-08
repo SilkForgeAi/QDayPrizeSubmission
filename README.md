@@ -1,8 +1,8 @@
 QDay Prize Submission — Breaking ECC Keys with Shor's Algorithm
 
-16-bit is the largest ECC key broken on real quantum hardware as of April 2026.
+17-bit is the largest ECC key broken on real quantum hardware as of April 2026.
 
-This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 16-bit subgroup sizes.
+This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 17-bit subgroup sizes.
 
 Contact: Aaron@vexaai.app
 
@@ -22,12 +22,13 @@ Bit   n       p       d (recovered)   Qubits   Shots    Hits   Success Rate   Jo
 14    8293    8209    137             61       20,000   1      0.005%         d78mjlak86tc739vf86g
 15    16693   16477   14794           65       20,000   2      0.010%         d78mmv2k86tc739vfbcg
 16    32497   32803   20248           65       20,000   1      0.005%         d78mud3c6das739i2rlg
+17    65173   65647   1441            69       100,000  1      0.001%         d7at4i15a5qc73dmmlr0
 
 All results EC-verified: d*G = Q confirmed on the competition curve y^2 = x^3 + 7.
 All jobs publicly auditable at: https://quantum.ibm.com/
 
 Backends: ibm_torino and ibm_fez (IBM Heron r1, ~0.05% 2Q gate error)
-Dates: March 31, 2026 (9-bit, 10-bit) / April 1, 2026 (11-bit, 12-bit) / April 4, 2026 (13-bit through 16-bit)
+Dates: March 31, 2026 (9-bit, 10-bit) / April 1, 2026 (11-bit, 12-bit) / April 4, 2026 (13-bit through 16-bit) / April 7, 2026 (17-bit)
 
 
 Key Details
@@ -88,6 +89,13 @@ Key Details
   Verification: 20248 * G = Q
   Job ID: d78mud3c6das739i2rlg (ibm_fez, April 4, 2026)
 
+17-bit key
+  Curve: y^2 = x^3 + 7 over GF(65647), subgroup order n = 65173
+  Generator: G = (12976, 52834), Public key: Q = (477, 58220)
+  Private key recovered: d = 1441
+  Verification: 1441 * G = Q
+  Job ID: d7at4i15a5qc73dmmlr0 (ibm_fez, April 7, 2026; 100,000 shots)
+
 
 Algorithm
 
@@ -95,7 +103,7 @@ Shor's algorithm for the Elliptic Curve Discrete Logarithm Problem (ECDLP).
 
 The quantum oracle computes f(a, b) = a*G + b*Q = (a + d*b)*G for superposed register values (a, b). After inverse QFT, the measurement outcomes (a_meas, b_meas) satisfy a_meas + d*b_meas = 0 (mod n), giving d_cand = -a_meas * b_meas^-1 mod n. Each candidate is classically verified by checking d_cand * G = Q.
 
-Circuit architecture (9-bit through 16-bit)
+Circuit architecture (9-bit through 17-bit)
 
 The key advance over prior 8-bit attempts is replacing the QFT-based (Draper) modular adder with a carry-ripple (CDKMRippleCarryAdder) modular adder:
 
@@ -129,6 +137,7 @@ Run simulator:
   python3 shor_9bit_ripple.py --mode sim --bits 14
   python3 shor_9bit_ripple.py --mode sim --bits 15
   python3 shor_9bit_ripple.py --mode sim --bits 16
+  python3 shor_9bit_ripple.py --mode sim --bits 17
 
 Run hardware:
   python3 shor_9bit_ripple.py --mode hw --bits 9 --shots 20000
@@ -139,6 +148,7 @@ Run hardware:
   python3 shor_9bit_ripple.py --mode hw --bits 14 --shots 20000
   python3 shor_9bit_ripple.py --mode hw --bits 15 --shots 20000
   python3 shor_9bit_ripple.py --mode hw --bits 16 --shots 20000
+  python3 shor_9bit_ripple.py --mode hw --bits 17 --shots 100000
 
 
 Files
@@ -161,6 +171,7 @@ Files
   results/14bit.json        14-bit hardware result artifact
   results/15bit.json        15-bit hardware result artifact
   results/16bit.json        16-bit hardware result artifact
+  results/17bit.json        17-bit hardware result artifact (100k shots)
 
 
 Verification
