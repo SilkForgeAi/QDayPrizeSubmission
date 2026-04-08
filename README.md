@@ -1,6 +1,7 @@
 QDay Prize Submission — Breaking ECC Keys with Shor's Algorithm
 
 17-bit is the largest ECC key broken on real quantum hardware as of April 2026.
+The 17-bit break is not for the competition ( its a personal record)And was Broken after the deadline. 
 
 This repository contains verified IBM Quantum hardware results for ECDLP key recovery using Shor's algorithm, with scaling evidence from 4-bit through 17-bit subgroup sizes.
 
